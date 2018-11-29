@@ -11,19 +11,23 @@ wrk installation:
 ### Installing dependencies
 Run:
 
+    $ cd flask
     $ make
-### Starting Server
+    
+### Run all tests
+Run: 
+
+    $ ./test.sh  
+    
+### Test a specific server
 To start the gunicorn server in the NoFramework folder simply run:
     
     $ cd NoFramework
     $ make gunicorn
-
-*Other wsgi server options are: meinheld, uwsgi, and cherrypy*
-
-### Running Tests
-Once the server of choice is up and running simply run:
-    
     $ make test
+    
+The results will be in the `results.txt` file.
 
-It will run the test 3 times for 30 seconds each. The results will be in the terminal and results.txt
+*Other wsgi server options are: meinheld, uwsgi, and cherrypy*    
+
 

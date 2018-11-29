@@ -56,9 +56,5 @@ cherrypy:
 
 test:
 	@echo "running tests now ..."
-	for test in 1 2 3 ; do \
-		echo ""; \
-		echo "test $$test of 3..."; \
-    	wrk -t12 -c400 -d30s http://127.0.0.1:5000/ | tee -a results.txt; \
-    	sleep 5; \
-    done
+	sleep 5
+	wrk -t4 -c400 -d30s http://127.0.0.1:5000/ | tee -a results.txt
