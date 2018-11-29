@@ -1,5 +1,4 @@
 gunicorn==19.6.0
 meinheld==0.6.1
-uWSGI==2.0.14
-cherrypy==18.0.0
-cheroot==6.4.0
+uWSGI==2.0.15
+cherrypy==3.5.0

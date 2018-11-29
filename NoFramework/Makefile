@@ -52,7 +52,7 @@ cherrypy:
 	$(virtualEnv); \
     echo "" | tee -a results.txt; \
     echo "cherrypy" | tee -a results.txt; \
-    python cherrypy.py
+    python cherrypy.wsgi
 
 test:
 	@echo "running tests now ..."

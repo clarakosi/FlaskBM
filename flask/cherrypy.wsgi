@@ -1,7 +1,4 @@
-try:
-    from cheroot.wsgi import Server as WSGIServer, PathInfoDispatcher
-except ImportError:
-    from cherrypy.wsgiserver import CherryPyWSGIServer as WSGIServer, WSGIPathInfoDispatcher as PathInfoDispatcher
+from cherrypy.wsgiserver import CherryPyWSGIServer as WSGIServer, WSGIPathInfoDispatcher as PathInfoDispatcher
 
 from hello import app
 
