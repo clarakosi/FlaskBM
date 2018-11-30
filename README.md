@@ -18,15 +18,15 @@ Run:
 Run: 
 
     $ ./test.sh  
-    
+
 ### Test a specific server
 To start the gunicorn server in the NoFramework folder simply run:
     
     $ cd NoFramework
     $ make gunicorn
-    $ make test
+    $ make test connection=500 result=SERVER500.txt
     
-The results will be in the `results.txt` file.
+The results will be in `results/` folder. `connection` and `result` defaults to 500 and results.txt, respectively.
 
 *Other wsgi server options are: meinheld, uwsgi, and cherrypy*    
 
