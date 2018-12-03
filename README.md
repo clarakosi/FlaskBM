@@ -24,10 +24,15 @@ To start the gunicorn server in the NoFramework folder simply run:
     
     $ cd NoFramework
     $ make gunicorn
-    $ make test connection=500 result=SERVER500.txt
+    $ make test connection=500 result=SERVER.500.log
     
-The results will be in `results/` folder. `connection` and `result` defaults to 500 and results.txt, respectively.
+The results will be in `results/` folder. `connection` and `result` defaults to 500 and result.500.log, respectively.
 
 *Other wsgi server options are: meinheld, uwsgi, and cherrypy*    
+
+### Run parser
+parse.py will parse the results, producing a CSV file. Simply pass in the directory with the results:
+    
+    $ python parse.py results > results.csv
 
 

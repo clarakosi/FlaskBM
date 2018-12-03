@@ -1,5 +1,4 @@
-from cherrypy.wsgiserver import CherryPyWSGIServer as WSGIServer, WSGIPathInfoDispatcher as PathInfoDispatcher
-
+from cheroot.wsgi import Server as WSGIServer, PathInfoDispatcher
 from app import application
 
 d = PathInfoDispatcher({'/': application})

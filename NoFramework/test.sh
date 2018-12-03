@@ -19,7 +19,7 @@ for connection in "${connections[@]}"; do
     for server in "${servers[@]}"; do
         pid=`ps aux | grep $server | awk '{print $2}'`
         make $server &
-        make test connection=$connection result="$server$connection.txt"
+        make test connection=$connection result="$server.$connection.log"
         stop "$server"
         sleep 5
    done
