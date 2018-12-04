@@ -1,5 +1,6 @@
 RESULTS     ?= results.500.log
 CONNECTIONS ?= 500
+URL         ?= http://127.0.0.1:5000/
 VIRTUALENV  := . venv/bin/activate
 
 
@@ -53,7 +54,7 @@ cherrypy: venv
 test: venv
 	@echo "running tests now ..."
 	sleep 3
-	wrk -t4 -c$(CONNECTIONS) -d30s http://127.0.0.1:5000/ | tee -a results/$(RESULTS)
+	wrk -t4 -c$(CONNECTIONS) -d30s $(URL) | tee -a results/$(RESULTS)
 
 clean:
 	-rm -r venv
