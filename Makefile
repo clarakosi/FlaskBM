@@ -55,9 +55,11 @@ cherrypy: venv
 	    python cherrypy.wsgi
 
 test: venv
-	@echo "running tests now ..."
+	@echo "preheating..."
 	sleep 3
-	wrk -t4 -c$(CONNECTIONS) -d30s $(URL) | tee -a results/$(RESULTS)
+	wrk -t4 -c$(CONNECTIONS) -d30s $(URL) &> /dev/null
+	@echo "running benchmark..."
+	wrk -t4 -c$(CONNECTIONS) -d3m $(URL) | tee -a results/$(RESULTS)
 
 clean:
 	-rm -r venv
