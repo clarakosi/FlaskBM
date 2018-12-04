@@ -1,7 +1,6 @@
 RESULTS     ?= results.500.log
 CONNECTIONS ?= 500
 URL         ?= http://127.0.0.1:5000/
-PYTHON      ?= /usr/bin/python3
 VIRTUALENV  := . venv/bin/activate
 
 
@@ -27,7 +26,7 @@ debian-stamp:
 venv:
 	mkdir -p results
 	@echo "Creating virtual environment and downloading requirements"
-	$(PYTHON) -m venv venv && \
+	python3 -m venv venv && \
 	    . venv/bin/activate; \
 	    pip install wheel && \
 	    pip install -r requirements.txt;
