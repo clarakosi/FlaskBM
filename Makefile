@@ -1,8 +1,9 @@
 RESULTS     ?= results.500.log
 CONNECTIONS ?= 500
+URL         ?= http://127.0.0.1:5000/
+PYTHON      ?= /usr/bin/python3
 VIRTUALENV  := . venv/bin/activate
 
-#virtualEnv := venv\Scripts\activate For WINDOWS
 
 all: install
 
@@ -18,13 +19,15 @@ debian: debian-stamp
 debian-stamp:
 	sudo apt install -y \
 	    gunicorn \
-	    uwsgi
+	    uwsgi \
+	    wrk \
+	    python3
 	touch debian-stamp
 
 venv:
 	mkdir -p results
 	@echo "Creating virtual environment and downloading requirements"
-	python3 -m venv venv && \
+	$(PYTHON) -m venv venv && \
 	    . venv/bin/activate; \
 	    pip install wheel && \
 	    pip install -r requirements.txt;
@@ -37,29 +40,29 @@ endif
 
 gunicorn: venv
 	$(VIRTUALENV); \
-		gunicorn -c config.py -b 0.0.0.0:5000 hello:app
+	    gunicorn -c config.py -b 0.0.0.0:5000 app:application
 
 meinheld: venv
 	$(VIRTUALENV); \
-		gunicorn -c config.py -b 0.0.0.0:5000 --worker-class=meinheld.gmeinheld.MeinheldWorker hello:app
+	    gunicorn -c config.py -b 0.0.0.0:5000 --worker-class=meinheld.gmeinheld.MeinheldWorker app:application
 
 uwsgi: venv
 	$(VIRTUALENV); \
-		uwsgi --http :5000 --wsgi-file hello.py --callable app -p 4 --threads 2 -L -T
+	    uwsgi --http :5000 --wsgi-file app.py -p 4 --threads 2 -L -T
 
 cherrypy: venv
 	$(VIRTUALENV); \
-    	python cherrypy.wsgi
+	    python cherrypy.wsgi
 
 test: venv
-	@echo "running tests now ..."
+	@echo "preheating..."
 	sleep 3
-	wrk -t4 -c$(CONNECTIONS) -d30s http://127.0.0.1:5000/ | tee -a results/$(RESULTS)
+	wrk -t4 -c$(CONNECTIONS) -d30s $(URL) &> /dev/null
+	@echo "running benchmark..."
+	wrk -t4 -c$(CONNECTIONS) -d3m $(URL) | tee -a results/$(RESULTS)
 
 clean:
 	-rm -r venv
 	-rm debian-stamp
 
 .PHONY: all install gunicorn meinheld uwsgi cherrypy test clean
-
-
