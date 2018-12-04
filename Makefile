@@ -61,7 +61,7 @@ test: venv
 	wrk -t4 -c$(CONNECTIONS) -d3m $(URL) | tee -a results/$(RESULTS)
 
 clean:
-	-rm -r venv
-	-rm debian-stamp
+	-rm -rf venv
+	-rm -f debian-stamp
 
 .PHONY: all install gunicorn meinheld uwsgi cherrypy test clean
