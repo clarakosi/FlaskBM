@@ -1,0 +1,9 @@
+Running 30s test @ http://127.0.0.1:5000/
+  4 threads and 4000 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency   773.15ms  109.59ms   1.26s    91.44%
+    Req/Sec   341.13    254.35     1.09k    63.89%
+  38903 requests in 30.09s, 7.31MB read
+  Socket errors: connect 2983, read 0, write 0, timeout 0
+Requests/sec:   1292.96
+Transfer/sec:    248.75KB
