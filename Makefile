@@ -18,7 +18,8 @@ debian: debian-stamp
 debian-stamp:
 	sudo apt install -y \
 	    gunicorn \
-	    uwsgi
+	    uwsgi \
+	    wrk
 	touch debian-stamp
 
 venv:
