@@ -1,6 +1,7 @@
 RESULTS     ?= results.500.log
 CONNECTIONS ?= 500
 URL         ?= http://127.0.0.1:5000/
+PYTHON      ?= /usr/bin/python3
 VIRTUALENV  := . venv/bin/activate
 
 
@@ -19,13 +20,14 @@ debian-stamp:
 	sudo apt install -y \
 	    gunicorn \
 	    uwsgi \
-	    wrk
+	    wrk \
+	    python3
 	touch debian-stamp
 
 venv:
 	mkdir -p results
 	@echo "Creating virtual environment and downloading requirements"
-	python3 -m venv venv && \
+	$(PYTHON) -m venv venv && \
 	    . venv/bin/activate; \
 	    pip install wheel && \
 	    pip install -r requirements.txt;
