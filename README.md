@@ -24,7 +24,7 @@ To start the gunicorn server in the NoFramework folder simply run:
     
     $ cd NoFramework
     $ make gunicorn
-    $ make test connection=500 result=SERVER.500.log
+    $ make test CONNECTIONS=500 RESULTS=SERVER.500.log
     
 The results will be in `results/` folder. `connection` and `result` defaults to 500 and result.500.log, respectively.
 

@@ -52,6 +52,7 @@ cherrypy: venv
 
 test: venv
 	@echo "running tests now ..."
+	sleep 3
 	wrk -t4 -c$(CONNECTIONS) -d30s http://127.0.0.1:5000/ | tee -a results/$(RESULTS)
 
 clean:
