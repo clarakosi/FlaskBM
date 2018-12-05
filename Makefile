@@ -1,5 +1,5 @@
-RESULTS     ?= results.500.log
 CONNECTIONS ?= 500
+RESULTS     ?= results.$(CONNECTIONS).log
 URL         ?= http://127.0.0.1:5000/
 VIRTUALENV  := . venv/bin/activate
 
@@ -24,7 +24,6 @@ debian-stamp:
 	touch debian-stamp
 
 venv:
-	mkdir -p results
 	@echo "Creating virtual environment and downloading requirements"
 	python3 -m venv venv && \
 	    . venv/bin/activate; \
@@ -32,28 +31,29 @@ venv:
 	    pip install -r requirements.txt;
 
 install: venv
+	mkdir -p results
 
 ifeq ("$(shell which wrk)", "")
 	$(error wrk is not installed)
 endif
 
-gunicorn: venv
+gunicorn: install
 	$(VIRTUALENV); \
 	    gunicorn -c config.py -b 0.0.0.0:5000 app:application
 
-meinheld: venv
+meinheld: install
 	$(VIRTUALENV); \
 	    gunicorn -c config.py -b 0.0.0.0:5000 --worker-class=meinheld.gmeinheld.MeinheldWorker app:application
 
-uwsgi: venv
+uwsgi: install
 	$(VIRTUALENV); \
 	    uwsgi --http :5000 --wsgi-file app.py -p 4 --threads 2 -L -T
 
-cherrypy: venv
+cherrypy: install
 	$(VIRTUALENV); \
 	    python cherrypy.wsgi
 
-test: venv
+test: install
 	@echo "preheating..."
 	sleep 3
 	wrk -t4 -c$(CONNECTIONS) -d30s $(URL) &> /dev/null
