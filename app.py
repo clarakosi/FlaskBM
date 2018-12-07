@@ -1,9 +1,11 @@
 
-# Barebones WSGI application.
-
-import json
+from flask import Flask
 
 
-def application(env, start_response):
-    start_response("200 OK", [("Content-Type", "text/plain")])
-    return [b"Hello World!"]
+application = Flask(__name__)
+
+
+@application.route("/")
+def hw():
+    return "Hello World!"
+
