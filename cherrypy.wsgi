@@ -1,11 +1,15 @@
-from cheroot.wsgi import Server as WSGIServer, PathInfoDispatcher
+
 from app import application
+import cherrypy
 
-d = PathInfoDispatcher({'/': application})
-server = WSGIServer(('0.0.0.0', 5000), d)
 
-if __name__ == '__main__':
-    try:
-        server.start()
-    except KeyboardInterrupt:
-        server.stop()
+if __name__ == "__main__":
+    cherrypy.tree.graft(application, "/")
+    cherrypy.server.unsubscribe()
+    server = cherrypy._cpserver.Server()
+    server.socket_host = "0.0.0.0"
+    server.socket_port = 5000
+    server.thread_pool = 30
+    server.subscribe()
+    cherrypy.engine.start()
+    cherrypy.engine.block()

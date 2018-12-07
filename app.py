@@ -1,9 +1,14 @@
-
-# Barebones WSGI application.
-
-import json
+import cherrypy
 
 
-def application(env, start_response):
-    start_response("200 OK", [("Content-Type", "text/plain")])
-    return [b"Hello World!"]
+class Root(object):
+        @cherrypy.expose
+        def index(self):
+            return "Hello World"
+
+cherrypy.config.update({'engine.autoreload.on': False})
+cherrypy.config.update({'environment': 'embedded'})
+cherrypy.server.unsubscribe()
+cherrypy.engine.start()
+
+application = cherrypy.tree.mount(Root())
