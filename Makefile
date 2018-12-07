@@ -45,6 +45,10 @@ meinheld: install
 	$(VIRTUALENV); \
 	    gunicorn -c config.py -b 0.0.0.0:5000 --worker-class=meinheld.gmeinheld.MeinheldWorker app:application
 
+meinheld_meinheld: install
+	$(VIRTUALENV); \
+	    python meinheld.wsgi
+
 uwsgi: install
 	$(VIRTUALENV); \
 	    uwsgi --http :5000 --wsgi-file app.py -p 4 --threads 2 -L -T
